@@ -21,6 +21,20 @@ module Alchemy
         end
         ApplicationController.any_instance.stub(:current_user).and_return(user)
       end
+
+      # Capybara actions to create a new element.
+      #
+      # You can pass the name of the desired element, or just use the default "Article".
+      #
+      def create_element!(name = 'Article')
+        within '#alchemy_elements_window' do
+          click_link Alchemy::I18n.t('New Element')
+        end
+        within '.alchemy-dialog' do
+          select(name, from: 'element[name]')
+          click_button 'Add'
+        end
+      end
     end
 
   end
